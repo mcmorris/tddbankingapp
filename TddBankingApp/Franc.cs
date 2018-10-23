@@ -1,8 +1,8 @@
 ﻿namespace TddBankingApp
 {
-    public class Dollar : Money
+    public class Franc : Money
     {
-        public Dollar(decimal amount) :
+        public Franc(decimal amount) :
             base(amount)
         {
             this.amount = amount;

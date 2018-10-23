@@ -1,5 +1,10 @@
 ﻿Starting from Test-Driven Development Money Example
 
 $5 + 10 CHF = $10 if rate is 2:1
-Money rounding
+Money rounding?
 hashCode()
+Equal null
+Equal object
+Dollar/Franc duplication
+Common times
+Compare Francs with Dollars
