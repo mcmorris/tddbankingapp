@@ -1,5 +1,5 @@
 ﻿Starting from Test-Driven Development Money Example
 
 $5 + 10 CHF = $10 if rate is 2:1
-Make "amount" private
 Money rounding
+hashCode()

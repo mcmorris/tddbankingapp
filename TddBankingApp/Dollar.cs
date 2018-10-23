@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TddBankingApp
+﻿namespace TddBankingApp
 {
     public class Dollar
     {
-        public int amount;
+        private decimal _amount;
 
-        public Dollar(int amount) { this.amount = amount; }
-
-        public Dollar times(int multiplier)
+        public Dollar(decimal amount)
         {
-            return new Dollar(this.amount * multiplier);
+            this._amount = amount;
+        }
+
+        public Dollar Times(int multiplier)
+        {
+            return new Dollar(this._amount * multiplier);
+        }
+
+        public override bool Equals(object other)
+        {
+            var otherDollar = (Dollar)other;
+            return this._amount == otherDollar?._amount;
         }
     }
 }

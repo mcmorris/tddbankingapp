@@ -12,11 +12,15 @@ namespace TddBankingTests
         public void TestMultiplication()
         {
             var five = new Dollar(5);
-            var product = five.times(2);
-            five.times(2);
-            Assert.AreEqual(10, product.amount);
-            product = five.times(3);
-            Assert.AreEqual(15, product.amount);
+            Assert.AreEqual(new Dollar(10), five.Times(2));
+            Assert.AreEqual(new Dollar(15), five.Times(3));
+        }
+
+        [TestMethod]
+        public void TestEquality()
+        {
+            Assert.IsTrue(new Dollar(5).Equals(new Dollar(5)));
+            Assert.IsFalse(new Dollar(6).Equals(new Dollar(5)));
         }
     }
 }
