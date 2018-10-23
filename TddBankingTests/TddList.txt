@@ -5,6 +5,4 @@ Money rounding?
 hashCode()
 Equal null
 Equal object
-Dollar/Franc duplication
-Common times
-Compare Francs with Dollars
+Delete testFrancMultiplication?
