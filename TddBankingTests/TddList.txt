@@ -1,8 +1,4 @@
-﻿Starting from Test-Driven Development Money Example
-
-$5 + 10 CHF = $10 if rate is 2:1
-$5 + $5 = $10
-$5 * $5 = $25
-Money side-effects
-
-Money
+﻿Equals
+hashCode()
+Equal null
+Reduce duplication in Add and Multiply functions

@@ -1,8 +1,6 @@
 ﻿namespace TddBankingApp
 {
-    using System.Runtime.CompilerServices;
-
-    public class Currency
+    public class Currency : ICurrency
     {
         public decimal Amount { get; }
         public string Code { get; }
@@ -13,12 +11,18 @@
             this.Code = code;
         }
 
-        public static Currency Dollar(decimal amount)
+        public override bool Equals(object other)
+        {
+            var otherMoney = (Currency)other;
+            return this.Code == otherMoney?.Code && this.Amount == otherMoney.Amount;
+        }
+
+        public static ICurrency Dollar(decimal amount)
         {
             return new Currency(amount, "USD");
         }
 
-        public static Currency Franc(decimal amount)
+        public static ICurrency Franc(decimal amount)
         {
             return new Currency(amount, "CHF");
         }

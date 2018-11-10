@@ -10,18 +10,43 @@
     public class CurrencyTests
     {
         [TestMethod]
-        public void TestCurrencyDate()
+        public void TestSimpleAddition()
         {
-            var money1 = Currency.Dollar(5);
-            var money2 = Currency.Dollar(5);
-
-            // Then how to get money rates?
             var bank = new Bank("USD");
-            var localMoney1 = bank.ConvertToLocal(money1);
-            var localMoney2 = bank.ConvertToLocal(money2);
+            var sum = bank.Add(Currency.Dollar(5M), Currency.Dollar(5M));
+            Assert.AreEqual(sum, Currency.Dollar(10M));
+        }
 
-            var sum = localMoney1.Amount + localMoney2.Amount;
-            Assert.AreEqual(sum, 10M);
+        [TestMethod]
+        public void TestSimpleMultiplication()
+        {
+            var bank = new Bank("USD");
+            var sum = bank.Multiply(Currency.Dollar(5M), Currency.Dollar(5M));
+            Assert.AreEqual(sum, Currency.Dollar(25M));
+        }
+
+        [TestMethod]
+        public void TestMixedAddition()
+        {
+            var bank        = new Bank("USD");
+            bank.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
+            var sum = bank.Add(Currency.Dollar(5M), Currency.Franc(5M));
+            Assert.AreEqual(sum, Currency.Dollar(15M));
+
+            sum = bank.Add(sum, Currency.Franc(10M));
+            Assert.AreEqual(sum, Currency.Dollar(35M));
+        }
+
+        [TestMethod]
+        public void TestMixedMultiplication()
+        {
+            var bank = new Bank("USD");
+            bank.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
+            var sum = bank.Multiply(Currency.Dollar(5M), Currency.Franc(5M));
+            Assert.AreEqual(sum, Currency.Dollar(50M));
+
+            sum = bank.Multiply(sum, Currency.Franc(2M));
+            Assert.AreEqual(sum, Currency.Dollar(200M));
         }
     }
 }

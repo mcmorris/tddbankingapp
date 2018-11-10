@@ -36,7 +36,7 @@
                             n.Effective <= during).Max();
         }
 
-        public Currency ConvertToLocal(Currency originalCurrency)
+        public ICurrency ConvertToLocal(ICurrency originalCurrency)
         {
             if (originalCurrency == null) { return null; }
             if (originalCurrency.Code == this.internalCode) { return originalCurrency; }
@@ -50,6 +50,22 @@
 
             var newValue = originalCurrency.Amount * exchangeRate.ConversionRate;
             return new Currency(newValue, this.internalCode);
+        }
+
+        public ICurrency Add(ICurrency augend, ICurrency addend)
+        {
+            var localAugend = this.ConvertToLocal(augend);
+            var localAddend = this.ConvertToLocal(addend);
+            if (localAugend == null || localAddend == null) { return null; }
+            return new Currency(localAugend.Amount + localAddend.Amount, this.internalCode);
+        }
+
+        public ICurrency Multiply(ICurrency augend, ICurrency addend)
+        {
+            var localAugend = this.ConvertToLocal(augend);
+            var localAddend = this.ConvertToLocal(addend);
+            if (localAugend == null || localAddend == null) { return null; }
+            return new Currency(localAugend.Amount * localAddend.Amount, this.internalCode);
         }
     }
 }
