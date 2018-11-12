@@ -42,11 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\MultiplyCurrencyCommand.cs" />
+    <Compile Include="Commands\ICurrencyCommand.cs" />
+    <Compile Include="Commands\UndoRedoStack.cs" />
+    <Compile Include="CurrencyHandler.cs" />
+    <Compile Include="IBank.cs" />
     <Compile Include="Bank.cs" />
+    <Compile Include="Commands\AddCurrencyCommand.cs" />
     <Compile Include="ICurrency.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="IExchangeRate.cs" />
     <Compile Include="ExchangeRate.cs" />
+    <Compile Include="MoneyFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

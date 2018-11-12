@@ -14,17 +14,7 @@
         public override bool Equals(object other)
         {
             var otherMoney = (Currency)other;
-            return this.Code == otherMoney?.Code && this.Amount == otherMoney.Amount;
-        }
-
-        public static ICurrency Dollar(decimal amount)
-        {
-            return new Currency(amount, "USD");
-        }
-
-        public static ICurrency Franc(decimal amount)
-        {
-            return new Currency(amount, "CHF");
+            return this.Code == otherMoney?.Code && this.Amount == otherMoney?.Amount;
         }
     }
 }

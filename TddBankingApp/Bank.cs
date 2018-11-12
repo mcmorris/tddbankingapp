@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
-    public class Bank
+    
+    public class Bank : IBank
     {
         private readonly IList<IExchangeRate> exchangeRates;
         private readonly string internalCode;
@@ -27,6 +27,11 @@
                             .Where(n => n.CurrencyFrom == currencyFrom && n.CurrencyTo == currencyTo)
                             .OrderByDescending(n => n.Effective)
                             .FirstOrDefault();
+        }
+
+        public IExchangeRate GetInternalExchangeRate(string currencyFrom)
+        {
+            return this.GetExchangeRate(currencyFrom, this.internalCode);
         }
 
         public IExchangeRate GetExchangeRateOn(string currencyFrom, string currencyTo, DateTime during)
@@ -52,20 +57,9 @@
             return new Currency(newValue, this.internalCode);
         }
 
-        public ICurrency Add(ICurrency augend, ICurrency addend)
+        public ICurrency InternalCurrency(decimal amount)
         {
-            var localAugend = this.ConvertToLocal(augend);
-            var localAddend = this.ConvertToLocal(addend);
-            if (localAugend == null || localAddend == null) { return null; }
-            return new Currency(localAugend.Amount + localAddend.Amount, this.internalCode);
-        }
-
-        public ICurrency Multiply(ICurrency augend, ICurrency addend)
-        {
-            var localAugend = this.ConvertToLocal(augend);
-            var localAddend = this.ConvertToLocal(addend);
-            if (localAugend == null || localAddend == null) { return null; }
-            return new Currency(localAugend.Amount * localAddend.Amount, this.internalCode);
+            return new Currency(amount, this.internalCode);
         }
     }
 }

@@ -1,4 +1,3 @@
-﻿Equals
+﻿Money.Equals
 hashCode()
-Equal null
-Reduce duplication in Add and Multiply functions
+Money.Equals null
