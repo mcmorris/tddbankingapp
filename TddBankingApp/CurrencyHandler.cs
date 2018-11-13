@@ -15,6 +15,5 @@
             var newMultiply = new MultiplyCurrencyCommand(multiplicand);
             return this.Do(newMultiply, bank, multiplier);
         }
-
     }
 }

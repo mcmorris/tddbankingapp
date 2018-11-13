@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CurrencyCommand.cs" />
     <Compile Include="Commands\MultiplyCurrencyCommand.cs" />
     <Compile Include="Commands\ICurrencyCommand.cs" />
     <Compile Include="Commands\UndoRedoStack.cs" />
@@ -53,7 +54,7 @@
     <Compile Include="Currency.cs" />
     <Compile Include="IExchangeRate.cs" />
     <Compile Include="ExchangeRate.cs" />
-    <Compile Include="MoneyFactory.cs" />
+    <Compile Include="Currencies.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

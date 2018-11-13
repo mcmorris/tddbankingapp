@@ -1,26 +1,19 @@
 ﻿namespace TddBankingApp.Commands
 {
-    public class MultiplyCurrencyCommand : ICurrencyCommand<ICurrency>
+    using System.Linq;
+
+    public class MultiplyCurrencyCommand : CurrencyCommand
     {
-        protected ICurrency OriginalValue;
-
         public MultiplyCurrencyCommand(ICurrency multiplicand)
-        {
-            this.OriginalValue = multiplicand;
-        }
+            : base(multiplicand) { }
 
-        public ICurrency Do(IBank bank, ICurrency multiplier)
+        public override ICurrency Do(IBank bank, ICurrency multiplier)
         {
-            var localMultiplicand = bank?.ConvertToLocal(this.OriginalValue);
-            var localMultiplier = bank?.ConvertToLocal(multiplier);
-            if (localMultiplicand == null || localMultiplier == null) { return null; }
+            var localArguments = this.ConvertArgumentsToLocal(bank, this.OriginalValue, multiplier);
+            if (localArguments == null) { return null; }
 
-            return MoneyFactory.BuildCurrency(localMultiplicand.Amount * localMultiplier.Amount, localMultiplicand.Code);
-        }
-
-        public ICurrency Undo(ICurrency addend)
-        {
-            return this.OriginalValue;
+            var product = localArguments.Select(c => c.Amount).Aggregate((multi, next) => multi * next);
+            return bank.InternalCurrency(product);
         }
     }
 }

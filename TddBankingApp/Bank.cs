@@ -4,14 +4,14 @@
     using System.Collections.Generic;
     using System.Linq;
     
-    public class Bank : IBank
+    public class Bank : CurrencyFactory, IBank
     {
         private readonly IList<IExchangeRate> exchangeRates;
         private readonly string internalCode;
 
         public Bank(string internalCode)
         {
-            this.exchangeRates = new List<IExchangeRate>();
+            this.exchangeRates = new List<IExchangeRate>();          
             this.internalCode = internalCode;
         }
 
@@ -54,12 +54,12 @@
             }
 
             var newValue = originalCurrency.Amount * exchangeRate.ConversionRate;
-            return new Currency(newValue, this.internalCode);
+            return this.InternalCurrency(newValue);
         }
 
         public ICurrency InternalCurrency(decimal amount)
         {
-            return new Currency(amount, this.internalCode);
+            return this.BuildCurrency(amount, this.internalCode);
         }
     }
 }

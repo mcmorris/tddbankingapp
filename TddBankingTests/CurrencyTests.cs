@@ -14,8 +14,8 @@
         {
             var bank = new Bank("USD");
             var runCommands = new CurrencyHandler();
-            var result = runCommands.Add(bank, MoneyFactory.Dollar(5M), MoneyFactory.Dollar(5M));
-            Assert.AreEqual(result, MoneyFactory.Dollar(10M));
+            var result = runCommands.Add(bank, bank.Dollar(5M), bank.Dollar(5M));
+            Assert.AreEqual(result, bank.Dollar(10M));
         }
 
         [TestMethod]
@@ -23,8 +23,8 @@
         {
             var bank = new Bank("USD");
             var runCommands = new CurrencyHandler();
-            var result      = runCommands.Add(bank, MoneyFactory.Dollar(5M), MoneyFactory.Dollar(-5M));
-            Assert.AreEqual(result, MoneyFactory.Dollar(0M));
+            var result      = runCommands.Add(bank, bank.Dollar(5M), bank.Dollar(-5M));
+            Assert.AreEqual(result, bank.Dollar(0M));
         }
         
         [TestMethod]
@@ -32,8 +32,8 @@
         {
             var bank = new Bank("USD");
             var runCommands = new CurrencyHandler();
-            var product     = runCommands.Multiply(bank, MoneyFactory.Dollar(5M), MoneyFactory.Dollar(5M));
-            Assert.AreEqual(product, MoneyFactory.Dollar(25M));
+            var product     = runCommands.Multiply(bank, bank.Dollar(5M), bank.Dollar(5M));
+            Assert.AreEqual(product, bank.Dollar(25M));
         }
 
         [TestMethod]
@@ -42,19 +42,18 @@
             var bank        = new Bank("USD");
             bank.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
             var runCommands = new CurrencyHandler();
-            var result = runCommands.Add(bank, MoneyFactory.Dollar(5M), MoneyFactory.Franc(5M));
-            Assert.AreEqual(result, MoneyFactory.Dollar(15M));
+            var result = runCommands.Add(bank, bank.Dollar(5M), bank.Franc(5M));
+            Assert.AreEqual(result, bank.Dollar(15M));
 
-            result = runCommands.Add(bank, result, MoneyFactory.Franc(10M));
-            Assert.AreEqual(result, MoneyFactory.Dollar(35M));
+            result = runCommands.Add(bank, result, bank.Franc(10M));
+            Assert.AreEqual(result, bank.Dollar(35M));
 
-            result = runCommands.Undo(MoneyFactory.Franc(10M));
-            Assert.AreEqual(result, MoneyFactory.Dollar(15M));
+            result = runCommands.Undo(bank.Franc(10M));
+            Assert.AreEqual(result, bank.Dollar(15M));
 
-            result = runCommands.Redo(bank, MoneyFactory.Franc(10M));
-            Assert.AreEqual(result, MoneyFactory.Dollar(35M));
+            result = runCommands.Redo(bank, bank.Franc(10M));
+            Assert.AreEqual(result, bank.Dollar(35M));
         }
-
 
         [TestMethod]
         public void TestMixedSubtraction()
@@ -62,11 +61,11 @@
             var bank = new Bank("USD");
             bank.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
             var runCommands = new CurrencyHandler();
-            var result = runCommands.Add(bank, MoneyFactory.Dollar(5M), MoneyFactory.Franc(-5M));
-            Assert.AreEqual(result, MoneyFactory.Dollar(-5M));
+            var result = runCommands.Add(bank, bank.Dollar(5M), bank.Franc(-5M));
+            Assert.AreEqual(result, bank.Dollar(-5M));
 
-            result = runCommands.Add(bank, result, MoneyFactory.Franc(10M));
-            Assert.AreEqual(result, MoneyFactory.Dollar(15M));
+            result = runCommands.Add(bank, result, bank.Franc(10M));
+            Assert.AreEqual(result, bank.Dollar(15M));
         }
 
         [TestMethod]
@@ -75,17 +74,29 @@
             var bank = new Bank("USD");
             bank.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
             var runCommands = new CurrencyHandler();
-            var product = runCommands.Multiply(bank, MoneyFactory.Dollar(5M), MoneyFactory.Franc(5M));
-            Assert.AreEqual(product, MoneyFactory.Dollar(50M));
+            var product = runCommands.Multiply(bank, bank.Dollar(5M), bank.Franc(5M));
+            Assert.AreEqual(product, bank.Dollar(50M));
 
-            product = runCommands.Multiply(bank, product, MoneyFactory.Franc(2M));
-            Assert.AreEqual(product, MoneyFactory.Dollar(200M));
+            product = runCommands.Multiply(bank, product, bank.Franc(2M));
+            Assert.AreEqual(product, bank.Dollar(200M));
 
-            product = runCommands.Undo(MoneyFactory.Franc(2M));
-            Assert.AreEqual(product, MoneyFactory.Dollar(50M));
+            product = runCommands.Undo(bank.Franc(2M));
+            Assert.AreEqual(product, bank.Dollar(50M));
 
-            product = runCommands.Redo(bank, MoneyFactory.Franc(2M));
-            Assert.AreEqual(product, MoneyFactory.Dollar(200M));
+            product = runCommands.Redo(bank, bank.Franc(2M));
+            Assert.AreEqual(product, bank.Dollar(200M));
+        }
+
+        [TestMethod]
+        public void TestMoneyEquality()
+        {
+            var bank = new Bank("USD");
+            bank.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
+
+            Assert.IsTrue(bank.Dollar(5M).Equals(bank.Dollar(5M)));
+            Assert.IsFalse(bank.Dollar(5M).Equals(bank.Franc(5M)));
+            Assert.IsTrue(bank.Franc(10M).Equals(bank.Franc(10M)));
+            Assert.IsFalse(bank.Dollar(5M).Equals(null));
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System.Collections;
-
-using TddBankingApp;
-
-namespace TddBankingApp
+﻿namespace TddBankingApp
 {
     public interface IBank
     {

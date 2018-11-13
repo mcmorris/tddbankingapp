@@ -13,7 +13,9 @@
 
         public override bool Equals(object other)
         {
-            var otherMoney = (Currency)other;
+            if (this.GetType() != other?.GetType()) { return false; }
+
+            var otherMoney = other as ICurrency;
             return this.Code == otherMoney?.Code && this.Amount == otherMoney?.Amount;
         }
     }
