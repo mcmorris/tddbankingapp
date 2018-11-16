@@ -1,8 +1,9 @@
 ﻿namespace TddBankingApp
 {
-    public interface ICurrency
+    public interface IMoney
     {
         decimal Amount { get; }
-        string Code { get; }
+
+        ICurrency Currency { get; }
     }
 }

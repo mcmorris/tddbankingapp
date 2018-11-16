@@ -2,17 +2,17 @@
 {
     using TddBankingApp.Commands;
 
-    public class CurrencyHandler : UndoRedoStack<ICurrency>
+    public class MoneyHandler : UndoRedoStack<IMoney>
     {
-        public ICurrency Add(IBank bank, ICurrency augend, ICurrency addend)
+        public IMoney Add(IBank bank, IMoney augend, IMoney addend)
         {
-            var newAdd = new AddCurrencyCommand(augend);
+            var newAdd = new AddMoneyCommand(augend);
             return this.Do(newAdd, bank, addend);
         }
 
-        public ICurrency Multiply(IBank bank, ICurrency multiplicand, ICurrency multiplier)
+        public IMoney Multiply(IBank bank, IMoney multiplicand, IMoney multiplier)
         {
-            var newMultiply = new MultiplyCurrencyCommand(multiplicand);
+            var newMultiply = new MultiplyMoneyCommand(multiplicand);
             return this.Do(newMultiply, bank, multiplier);
         }
     }

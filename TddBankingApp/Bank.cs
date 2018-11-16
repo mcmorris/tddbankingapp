@@ -4,15 +4,16 @@
     using System.Collections.Generic;
     using System.Linq;
     
-    public class Bank : CurrencyFactory, IBank
+    public class Bank : MoneyFactory, IBank
     {
         private readonly IList<IExchangeRate> exchangeRates;
-        private readonly string internalCode;
+        private readonly ICurrency internalCurrency;
 
-        public Bank(string internalCode)
+        public Bank(CurrencyListing currencies, string internalCurrencyCode) 
+            : base(currencies)
         {
-            this.exchangeRates = new List<IExchangeRate>();          
-            this.internalCode = internalCode;
+            this.exchangeRates = new List<IExchangeRate>();
+            this.internalCurrency = currencies.GetCurrency(internalCurrencyCode);
         }
 
         public void AddExchangeRate(IExchangeRate newRate)
@@ -31,7 +32,7 @@
 
         public IExchangeRate GetInternalExchangeRate(string currencyFrom)
         {
-            return this.GetExchangeRate(currencyFrom, this.internalCode);
+            return this.GetExchangeRate(currencyFrom, this.internalCurrency.AlphabeticCode);
         }
 
         public IExchangeRate GetExchangeRateOn(string currencyFrom, string currencyTo, DateTime during)
@@ -41,25 +42,25 @@
                             n.Effective <= during).Max();
         }
 
-        public ICurrency ConvertToLocal(ICurrency originalCurrency)
+        public IMoney ConvertToLocal(IMoney originalMoney)
         {
-            if (originalCurrency == null) { return null; }
-            if (originalCurrency.Code == this.internalCode) { return originalCurrency; }
+            if (originalMoney == null) { return null; }
+            if (originalMoney.Currency == this.internalCurrency) { return originalMoney; }
 
-            var exchangeRate = this.GetExchangeRate(originalCurrency.Code, this.internalCode);
+            var exchangeRate = this.GetExchangeRate(originalMoney.Currency.AlphabeticCode, this.internalCurrency.AlphabeticCode);
             if (exchangeRate == null)
             {
                 throw new InvalidOperationException(
-                    "Missing exchange rate for '" + originalCurrency.Code + "' to '" + this.internalCode + "'");
+                    "Missing exchange rate for '" + originalMoney.Currency.AlphabeticCode + "' to '" + this.internalCurrency.AlphabeticCode + "'");
             }
 
-            var newValue = originalCurrency.Amount * exchangeRate.ConversionRate;
-            return this.InternalCurrency(newValue);
+            var newValue = originalMoney.Amount * exchangeRate.ConversionRate;
+            return this.InternalMoney(newValue);
         }
 
-        public ICurrency InternalCurrency(decimal amount)
+        public IMoney InternalMoney(decimal amount)
         {
-            return this.BuildCurrency(amount, this.internalCode);
+            return this.BuildMoney(amount, this.internalCurrency);
         }
     }
 }

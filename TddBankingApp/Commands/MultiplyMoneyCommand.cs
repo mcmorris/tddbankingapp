@@ -2,18 +2,18 @@
 {
     using System.Linq;
 
-    public class MultiplyCurrencyCommand : CurrencyCommand
+    public class MultiplyMoneyCommand : MoneyCommand
     {
-        public MultiplyCurrencyCommand(ICurrency multiplicand)
+        public MultiplyMoneyCommand(IMoney multiplicand)
             : base(multiplicand) { }
 
-        public override ICurrency Do(IBank bank, ICurrency multiplier)
+        public override IMoney Do(IBank bank, IMoney multiplier)
         {
             var localArguments = this.ConvertArgumentsToLocal(bank, this.OriginalValue, multiplier);
             if (localArguments == null) { return null; }
 
             var product = localArguments.Select(c => c.Amount).Aggregate((multi, next) => multi * next);
-            return bank.InternalCurrency(product);
+            return bank.InternalMoney(product);
         }
     }
 }

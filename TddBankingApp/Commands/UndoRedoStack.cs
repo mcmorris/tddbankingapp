@@ -5,8 +5,8 @@
     // Thanks to: https://www.cambiaresearch.com/articles/82/generic-undoredo-stack-in-csharp
     public class UndoRedoStack<T>
     {
-        protected Stack<ICurrencyCommand<T>> UndoStack;
-        protected Stack<ICurrencyCommand<T>> RedoStack;
+        protected Stack<IMoneyCommand<T>> UndoStack;
+        protected Stack<IMoneyCommand<T>> RedoStack;
 
         public UndoRedoStack()
         {
@@ -15,11 +15,11 @@
 
         public void Reset()
         {
-            this.UndoStack = new Stack<ICurrencyCommand<T>>();
-            this.RedoStack = new Stack<ICurrencyCommand<T>>();
+            this.UndoStack = new Stack<IMoneyCommand<T>>();
+            this.RedoStack = new Stack<IMoneyCommand<T>>();
         }
 
-        public T Do(ICurrencyCommand<T> command, IBank bank, T input)
+        public T Do(IMoneyCommand<T> command, IBank bank, T input)
         {
             var output = command.Do(bank, input);
             this.UndoStack.Push(command);

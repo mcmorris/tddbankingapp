@@ -12,8 +12,8 @@
         [TestMethod]
         public void TestSimpleAddition()
         {
-            var bank = new Bank("USD");
-            var runCommands = new CurrencyHandler();
+            var bank = new Bank(new MockUpCurrencyListing(), "USD");
+            var runCommands = new MoneyHandler();
             var result = runCommands.Add(bank, bank.Dollar(5M), bank.Dollar(5M));
             Assert.AreEqual(result, bank.Dollar(10M));
         }
@@ -21,8 +21,8 @@
         [TestMethod]
         public void TestSimpleSubtraction()
         {
-            var bank = new Bank("USD");
-            var runCommands = new CurrencyHandler();
+            var bank = new Bank(new MockUpCurrencyListing(), "USD");
+            var runCommands = new MoneyHandler();
             var result      = runCommands.Add(bank, bank.Dollar(5M), bank.Dollar(-5M));
             Assert.AreEqual(result, bank.Dollar(0M));
         }
@@ -30,8 +30,8 @@
         [TestMethod]
         public void TestSimpleMultiplication()
         {
-            var bank = new Bank("USD");
-            var runCommands = new CurrencyHandler();
+            var bank = new Bank(new MockUpCurrencyListing(), "USD");
+            var runCommands = new MoneyHandler();
             var product     = runCommands.Multiply(bank, bank.Dollar(5M), bank.Dollar(5M));
             Assert.AreEqual(product, bank.Dollar(25M));
         }
@@ -39,9 +39,9 @@
         [TestMethod]
         public void TestMixedAddition()
         {
-            var bank        = new Bank("USD");
+            var bank        = new Bank(new MockUpCurrencyListing(), "USD");
             bank.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
-            var runCommands = new CurrencyHandler();
+            var runCommands = new MoneyHandler();
             var result = runCommands.Add(bank, bank.Dollar(5M), bank.Franc(5M));
             Assert.AreEqual(result, bank.Dollar(15M));
 
@@ -58,9 +58,9 @@
         [TestMethod]
         public void TestMixedSubtraction()
         {
-            var bank = new Bank("USD");
+            var bank = new Bank(new MockUpCurrencyListing(), "USD");
             bank.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
-            var runCommands = new CurrencyHandler();
+            var runCommands = new MoneyHandler();
             var result = runCommands.Add(bank, bank.Dollar(5M), bank.Franc(-5M));
             Assert.AreEqual(result, bank.Dollar(-5M));
 
@@ -71,9 +71,9 @@
         [TestMethod]
         public void TestMixedMultiplication()
         {
-            var bank = new Bank("USD");
+            var bank = new Bank(new MockUpCurrencyListing(), "USD");
             bank.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
-            var runCommands = new CurrencyHandler();
+            var runCommands = new MoneyHandler();
             var product = runCommands.Multiply(bank, bank.Dollar(5M), bank.Franc(5M));
             Assert.AreEqual(product, bank.Dollar(50M));
 
@@ -90,7 +90,7 @@
         [TestMethod]
         public void TestMoneyEquality()
         {
-            var bank = new Bank("USD");
+            var bank = new Bank(new MockUpCurrencyListing(), "USD");
             bank.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
 
             Assert.IsTrue(bank.Dollar(5M).Equals(bank.Dollar(5M)));

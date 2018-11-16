@@ -22,8 +22,10 @@
 
         public override bool Equals(object other)
         {
-            var otherRate = (IExchangeRate)other;
-            if ((this.CurrencyFrom + this.CurrencyTo) != (otherRate?.CurrencyFrom + otherRate?.CurrencyTo)) { return false; }
+            if (this.GetType() != other?.GetType()) { return false; }
+
+            var otherRate = other as IExchangeRate;
+            if (this.CurrencyFrom != otherRate?.CurrencyFrom || this.CurrencyTo != otherRate?.CurrencyTo) { return false; }
             return this.ConversionRate == otherRate?.ConversionRate && this.Effective.Ticks == otherRate.Effective.Ticks;
         }
     }

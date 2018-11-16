@@ -42,19 +42,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CurrencyCommand.cs" />
-    <Compile Include="Commands\MultiplyCurrencyCommand.cs" />
-    <Compile Include="Commands\ICurrencyCommand.cs" />
+    <Compile Include="Commands\MoneyCommand.cs" />
+    <Compile Include="Commands\MultiplyMoneyCommand.cs" />
+    <Compile Include="Commands\IMoneyCommand.cs" />
     <Compile Include="Commands\UndoRedoStack.cs" />
     <Compile Include="CurrencyHandler.cs" />
+    <Compile Include="ExchangeRates\CurrencyListing.cs" />
+    <Compile Include="ExchangeRates\StockMarket.cs" />
+    <Compile Include="Iso4217\Currency.cs" />
     <Compile Include="IBank.cs" />
     <Compile Include="Bank.cs" />
-    <Compile Include="Commands\AddCurrencyCommand.cs" />
-    <Compile Include="ICurrency.cs" />
-    <Compile Include="Currency.cs" />
-    <Compile Include="IExchangeRate.cs" />
-    <Compile Include="ExchangeRate.cs" />
-    <Compile Include="Currencies.cs" />
+    <Compile Include="Commands\AddMoneyCommand.cs" />
+    <Compile Include="Iso4217\IMoney.cs" />
+    <Compile Include="ExchangeRates\IExchangeRate.cs" />
+    <Compile Include="ExchangeRates\ExchangeRate.cs" />
+    <Compile Include="Iso4217\MoneyFactory.cs" />
+    <Compile Include="Iso4217\DecimalCurrencyCultureExtension.cs" />
+    <Compile Include="Iso4217\ICurrency.cs" />
+    <Compile Include="Iso4217\Money.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -2,18 +2,18 @@
 {
     using System.Linq;
 
-    public class AddCurrencyCommand : CurrencyCommand
+    public class AddMoneyCommand : MoneyCommand
     {
-        public AddCurrencyCommand(ICurrency augend)
+        public AddMoneyCommand(IMoney augend)
             : base(augend) { }
 
-        public override ICurrency Do(IBank bank, ICurrency addend)
+        public override IMoney Do(IBank bank, IMoney addend)
         {
             var localArguments = this.ConvertArgumentsToLocal(bank, this.OriginalValue, addend);
             if (localArguments == null) { return null; }
 
             var sum = localArguments.Sum(argument => argument.Amount);
-            return bank.InternalCurrency(sum);
+            return bank.InternalMoney(sum);
         }
 
     }
