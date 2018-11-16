@@ -34,5 +34,10 @@
                             n.Effective <= during).Max();
         }
 
+        public static IExchangeRate ExchangeRate(DateTime date, string currencyFrom, string currencyTo, decimal rate)
+        {
+            return new ExchangeRate(date, currencyFrom, currencyTo, rate);
+        }
+
     }
 }

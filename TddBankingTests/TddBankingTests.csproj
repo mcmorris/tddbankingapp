@@ -48,12 +48,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrencyLookupTests.cs" />
     <Compile Include="MockUpCurrencyListing.cs" />
-    <Compile Include="CurrencyTests.cs" />
+    <Compile Include="MoneyTests.cs" />
     <Compile Include="ExchangeRateTests.cs" />
     <Compile Include="ISO4217CurrencyFormattingTests.cs" />
     <Compile Include="ISO4217MoneyOperationTests.cs" />
-    <Compile Include="ISO4217UpToDateExchangeRateTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

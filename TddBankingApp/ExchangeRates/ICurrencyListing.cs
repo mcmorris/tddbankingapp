@@ -1,14 +1,13 @@
 ﻿namespace TddBankingApp
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    using System;
 
     public interface ICurrencyListing
     {
         void AddCurrency(ICurrency newRate);
 
-        ICurrency GetCurrency(string currencyFromAlphabeticCode);
+        ICurrency GetCurrency(string currencyFromAlphabeticCode, DateTime dateSearched);
 
-        ICurrency GetCurrency(int? currencyFromNumericCode);
+        ICurrency GetCurrency(int? currencyFromNumericCode, DateTime dateSearched);
     }
 }

@@ -41,7 +41,7 @@
         {
             var unitCompare = this.Currency.CompareTo(other.Currency);
             return unitCompare == 0
-                       ? Amount.CompareTo(other.Amount)
+                       ? this.Amount.CompareTo(other.Amount)
                        : unitCompare;
         }
 

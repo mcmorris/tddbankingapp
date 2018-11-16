@@ -11,7 +11,7 @@
             : base(currencies)
         {
             this.stocks = stocks;
-            this.internalCurrency = currencies.GetCurrency(internalCurrencyCode);
+            this.internalCurrency = currencies.GetCurrency(internalCurrencyCode, DateTime.Now);
         }
 
         public IExchangeRate GetInternalExchangeRate(string currencyFrom)

@@ -1,7 +1,6 @@
 ﻿namespace TddBankingApp
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    using System;
 
     public class MoneyFactory
     {
@@ -14,32 +13,32 @@
 
         public IMoney Dollar(decimal amount)
         {
-            return this.BuildMoney(amount, this.Currencies.GetCurrency("USD"));
+            return this.BuildMoney(amount, this.Currencies.GetCurrency("USD", DateTime.Now));
         }
 
         public IMoney Franc(decimal amount)
         {
-            return this.BuildMoney(amount, this.Currencies.GetCurrency("CHF"));
+            return this.BuildMoney(amount, this.Currencies.GetCurrency("CHF", DateTime.Now));
         }
 
         public IMoney Pound(decimal amount)
         {
-            return this.BuildMoney(amount, this.Currencies.GetCurrency("GBP"));
+            return this.BuildMoney(amount, this.Currencies.GetCurrency("GBP", DateTime.Now));
         }
 
         public IMoney Euro(decimal amount)
         {
-            return this.BuildMoney(amount, this.Currencies.GetCurrency("EUR"));
+            return this.BuildMoney(amount, this.Currencies.GetCurrency("EUR", DateTime.Now));
         }
 
         public IMoney Dong(decimal amount)
         {
-            return this.BuildMoney(amount, this.Currencies.GetCurrency("VND"));
+            return this.BuildMoney(amount, this.Currencies.GetCurrency("VND", DateTime.Now));
         }
 
         public IMoney Rial(decimal amount)
         {
-            return this.BuildMoney(amount, this.Currencies.GetCurrency("IRR"));
+            return this.BuildMoney(amount, this.Currencies.GetCurrency("IRR", DateTime.Now));
         }
 
         public IMoney BuildMoney(decimal amount, ICurrency currency)

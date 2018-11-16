@@ -46,7 +46,7 @@
     <Compile Include="Commands\MultiplyMoneyCommand.cs" />
     <Compile Include="Commands\IMoneyCommand.cs" />
     <Compile Include="Commands\UndoRedoStack.cs" />
-    <Compile Include="CurrencyHandler.cs" />
+    <Compile Include="MoneyHandler.cs" />
     <Compile Include="ExchangeRates\ICurrencyListing.cs" />
     <Compile Include="ExchangeRates\CurrencyListing.cs" />
     <Compile Include="ExchangeRates\IStockExchange.cs" />

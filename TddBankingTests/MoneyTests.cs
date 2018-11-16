@@ -7,7 +7,7 @@
     using TddBankingApp;
 
     [TestClass]
-    public class CurrencyTests
+    public class MoneyTests
     {
         [TestMethod]
         public void TestSimpleAddition()
@@ -40,7 +40,7 @@
         public void TestMixedAddition()
         {
             var stockExchange = new StockExchange();
-            stockExchange.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
+            stockExchange.AddExchangeRate(StockExchange.ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
             var bank = new Bank(stockExchange, new MockUpCurrencyListing(), "USD");
 
             var runCommands = new MoneyHandler();
@@ -61,7 +61,7 @@
         public void TestMixedSubtraction()
         {
             var stockExchange = new StockExchange();
-            stockExchange.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
+            stockExchange.AddExchangeRate(StockExchange.ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
             var bank = new Bank(stockExchange, new MockUpCurrencyListing(), "USD");
 
             var runCommands = new MoneyHandler();
@@ -76,7 +76,7 @@
         public void TestMixedMultiplication()
         {
             var stockExchange = new StockExchange();
-            stockExchange.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
+            stockExchange.AddExchangeRate(StockExchange.ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
             var bank = new Bank(stockExchange, new MockUpCurrencyListing(), "USD");
 
             var runCommands = new MoneyHandler();
@@ -97,7 +97,7 @@
         public void TestMoneyEquality()
         {
             var stockExchange = new StockExchange();
-            stockExchange.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
+            stockExchange.AddExchangeRate(StockExchange.ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
             var bank = new Bank(stockExchange, new MockUpCurrencyListing(), "USD");
 
             Assert.IsTrue(bank.Dollar(5M).Equals(bank.Dollar(5M)));

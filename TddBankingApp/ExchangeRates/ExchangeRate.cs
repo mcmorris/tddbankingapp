@@ -28,5 +28,13 @@
             if (this.CurrencyFrom != otherRate?.CurrencyFrom || this.CurrencyTo != otherRate?.CurrencyTo) { return false; }
             return this.ConversionRate == otherRate?.ConversionRate && this.Effective.Ticks == otherRate.Effective.Ticks;
         }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (17 * this.CurrencyFrom.GetHashCode() * this.CurrencyTo.GetHashCode()) ^ this.ConversionRate.GetHashCode();
+            }
+        }
     }
 }

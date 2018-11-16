@@ -8,13 +8,13 @@
 
         int? NumericCode { get; }
 
-        int MinorUnit { get; }
+        int Exponent { get; }
 
         string Country { get; }
 
         string Name { get; }
 
-        bool ISO4217Standard { get; }
+        bool IsStandard { get; }
 
         DateTime? WithdrawalDate { get; }
 

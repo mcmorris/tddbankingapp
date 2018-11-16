@@ -1,44 +1,23 @@
 ﻿
 Support ISO 4217:
 Handle Distribution
-Handle Side-Effects / potential roundoff?
+Test for Side-Effects / potential roundoff
 Handle Formatting
 Parse formatted strings
 
 Detect whether a currency is valid, expired, or invalid
 Detect whether a currency is no longer in use (expired)
 
+        [TestMethod]
+        public void TestGetOldCurrency()
+        {
+            var targetDate    = new DateTime(2012, 10, 5, 8, 0, 0);
+            var stockExchange = new StockExchange();
+            stockExchange.AddExchangeRate(StockExchange.ExchangeRate(targetDate.AddDays(-2),                                              "CHF", "USD", 2.0M));
+            stockExchange.AddExchangeRate(StockExchange.ExchangeRate(new DateTime(2012, 12, 7, 7, 0, 0),                                  "CHF", "USD", 2.1M));
+            stockExchange.AddExchangeRate(StockExchange.ExchangeRate(new DateTime(2013, 2,  8, 8, 0, 0),                                  "CHF", "USD", 2.2M));
+            Assert.AreEqual(stockExchange.GetExchangeRateOn("CHF", "USD", targetDate), StockExchange.ExchangeRate(targetDate.AddDays(-2), "CHF", "USD", 2.0M));
+            Assert.AreEqual(stockExchange.GetExchangeRateOn("CHF", "CAD", targetDate), null);
+        }
 
-
-ISO 4217:
-
-The ISO 4217 standard includes a crude mechanism for expressing the relationship between a major currency unit and its corresponding minor currency unit. This mechanism is called the currency "exponent" and assumes a base of 10. For example, USD (the United States dollar) is equal to 100 of its minor currency unit the "cent". So the USD has exponent 2 (10 to the power 2 is 100, which is the number of cents in a dollar). The code JPY (Japanese yen) is given the exponent 0, because its minor unit, the sen, although nominally valued at 1/100 of a yen, is of such negligible value that it is no longer used. Usually, as with the USD, the minor currency unit has a value that is 1/100 of the major unit, but in some cases (including most varieties of the dinar) 1/1000 is used, and sometimes ratios apply which are not integer powers of 10. Mauritania does not use a decimal division of units, setting 1 ouguiya (UM) equal to 5 khoums, and Madagascar has 1 ariary = 5 iraimbilanja. Some currencies do not have any minor currency unit at all and these are given an exponent of 0, as with currencies whose minor units are unused due to negligible value.
-
-Treatment of minor currency units (the "exponent")
-The ISO 4217 standard includes a crude mechanism for expressing the relationship between a major currency unit and its corresponding minor currency unit. This mechanism is called the currency "exponent" and assumes a base of 10. For example, USD (the United States dollar) is equal to 100 of its minor currency unit the "cent". So the USD has exponent 2 (10 to the power 2 is 100, which is the number of cents in a dollar). The code JPY (Japanese yen) is given the exponent 0, because its minor unit, the sen, although nominally valued at 1/100 of a yen, is of such negligible value that it is no longer used. Usually, as with the USD, the minor currency unit has a value that is 1/100 of the major unit, but in some cases (including most varieties of the dinar) 1/1000 is used, and sometimes ratios apply which are not integer powers of 10. Mauritania does not use a decimal division of units, setting 1 ouguiya (UM) equal to 5 khoums, and Madagascar has 1 ariary = 5 iraimbilanja. Some currencies do not have any minor currency unit at all and these are given an exponent of 0, as with currencies whose minor units are unused due to negligible value.
-
-Code	  Num	E[7]	Currency	     Locations using this currency
-GIP	292	  2	            Gibraltar pound	 Gibraltar (pegged to GBP 1:1)
-
-According to UN/CEFACT recommendation 9, paragraphs 8–9 ECE/TRADE/203, 1996, available online:
-
-8. In applications where monetary resources associated with a currency (i.e. funds) need not be specified and where a field identifier indicating currency is used, the first two (leftmost) characters are sufficient to identify a currency—example: US for United States dollars for general, unspecified purposes where a field identifier indicating currency is present. (A field identifier can be a preprinted field heading in an aligned document or a similarly-agreed application in electronic transmission of data.)
-9. In applications where there is a need to distinguish between types of currencies, or where funds are required as in the banking environment, or where there is no field identifier, the third (rightmost) character of the alphabetic code is an indicator, preferably mnemonic, derived from the name of the major currency unit or fund—example: USD for general, unspecified purposes; USN for United States dollar next-day funds, and USS for funds which are immediately available for Federal Reserve transfer, withdrawal in cash or transfer in like funds (same-day funds). Since there is no need for such a distinction in international trade applications, the funds codes have not been included in the Annex to the present Recommendation.
-
-Currencies without ISO 4217 currency codes
-A number of currencies are not included in ISO 4217, because these currencies are: (a) minor currencies pegged 1:1 to a larger currency, even if independently regulated (b) a legal tender only issued as commemorative banknotes or coinage, or (c) a currency of an unrecognized or partially recognized state. These currencies include:
-
-Alderney pound (1:1 pegged to the pound sterling)
-Cook Islands dollar (1:1 pegged to the New Zealand dollar)
-Faroese króna (1:1 pegged to the Danish krone)
-Guernsey pound (1:1 pegged to the pound sterling)
-Isle of Man pound (1:1 pegged to the pound sterling)
-Jersey pound (1:1 pegged to the pound sterling)
-Kiribati dollar (1:1 pegged to the Australian dollar)
-Maltese scudo (1:0.24 pegged to the euro[19])
-Sahrawi peseta of the Sahrawi Arab Democratic Republic in Western Sahara, sometimes given the code "EHP" but this has not been assigned by the ISO
-Somaliland shilling (state of issue is viewed as de jure part of Somalia, exchange rate not fixed)
-Transnistrian ruble (state of issue is viewed as de jure part of Moldova)
-Tuvaluan dollar (1:1 pegged to the Australian dollar)
-Zimbabwean bonds (1:1 pegged to the US dollar)
-See Category:Fixed exchange rate for a list of all currently pegged currencies.
+        new Currency("ADP", 20, 0, "Andorran Peseta", "Andorra", false, DateTime.Parse("2003-07-01 12:00:00")),
