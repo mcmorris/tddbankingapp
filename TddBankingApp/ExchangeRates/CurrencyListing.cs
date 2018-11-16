@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class CurrencyListing
+    public class CurrencyListing : ICurrencyListing
     {
         protected IList<ICurrency> Currencies;
 

@@ -10,7 +10,8 @@
         [TestMethod]
         public void TestSplitOddAmount()
         {
-            var bank        = new Bank(new CurrencyListing(), "USD");
+            var stockExchange = new StockExchange();
+            var bank          = new Bank(stockExchange, new MockUpCurrencyListing(), "USD");
 
             //Assert.AreEqual(money.NumericCode, 840);
             //Assert.AreEqual(money.MinorUnit, 2);

@@ -22,7 +22,8 @@
         [TestMethod]
         public void TestCurrencyCultureFormatting()
         {
-            var bank = new Bank(new MockUpCurrencyListing(), "USD");
+            var stockExchange = new StockExchange();
+            var bank = new Bank(stockExchange, new MockUpCurrencyListing(), "USD");
             Assert.AreEqual(bank.Dollar(100M).ToString(), "$100.00");
             Assert.AreEqual(bank.Pound(100M).ToString(), "£100.00");
             Assert.AreEqual(bank.Euro(100M).ToString(), "100,00 €");

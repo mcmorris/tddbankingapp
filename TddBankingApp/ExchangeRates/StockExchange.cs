@@ -4,14 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
     
-    public class StockMarket
+    public class StockExchange : IStockExchange
     {
         private readonly IList<IExchangeRate> exchangeRates;
 
-        public StockMarket()
+        public StockExchange()
         {
-            this.exchangeRates = new List<IExchangeRate>();          
-
+            this.exchangeRates = new List<IExchangeRate>();
         }
 
         public void AddExchangeRate(IExchangeRate newRate)

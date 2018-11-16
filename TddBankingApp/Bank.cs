@@ -1,45 +1,22 @@
 ﻿namespace TddBankingApp
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     
     public class Bank : MoneyFactory, IBank
     {
-        private readonly IList<IExchangeRate> exchangeRates;
+        private readonly IStockExchange stocks;
         private readonly ICurrency internalCurrency;
 
-        public Bank(CurrencyListing currencies, string internalCurrencyCode) 
+        public Bank(IStockExchange stocks, ICurrencyListing currencies, string internalCurrencyCode) 
             : base(currencies)
         {
-            this.exchangeRates = new List<IExchangeRate>();
+            this.stocks = stocks;
             this.internalCurrency = currencies.GetCurrency(internalCurrencyCode);
-        }
-
-        public void AddExchangeRate(IExchangeRate newRate)
-        {
-            if (this.exchangeRates.Contains(newRate)) { return; }
-            this.exchangeRates.Add(newRate);
-        }
-
-        public IExchangeRate GetExchangeRate(string currencyFrom, string currencyTo)
-        {
-            return this.exchangeRates
-                            .Where(n => n.CurrencyFrom == currencyFrom && n.CurrencyTo == currencyTo)
-                            .OrderByDescending(n => n.Effective)
-                            .FirstOrDefault();
         }
 
         public IExchangeRate GetInternalExchangeRate(string currencyFrom)
         {
-            return this.GetExchangeRate(currencyFrom, this.internalCurrency.AlphabeticCode);
-        }
-
-        public IExchangeRate GetExchangeRateOn(string currencyFrom, string currencyTo, DateTime during)
-        {
-            return this.exchangeRates
-                       .Where(n => n.CurrencyFrom == currencyFrom && n.CurrencyTo == currencyTo && 
-                            n.Effective <= during).Max();
+            return this.stocks.GetExchangeRate(currencyFrom, this.internalCurrency.AlphabeticCode);
         }
 
         public IMoney ConvertToLocal(IMoney originalMoney)
@@ -47,7 +24,7 @@
             if (originalMoney == null) { return null; }
             if (originalMoney.Currency == this.internalCurrency) { return originalMoney; }
 
-            var exchangeRate = this.GetExchangeRate(originalMoney.Currency.AlphabeticCode, this.internalCurrency.AlphabeticCode);
+            var exchangeRate = this.stocks.GetExchangeRate(originalMoney.Currency.AlphabeticCode, this.internalCurrency.AlphabeticCode);
             if (exchangeRate == null)
             {
                 throw new InvalidOperationException(

@@ -5,9 +5,9 @@
 
     public class MoneyFactory
     {
-        protected CurrencyListing Currencies;
+        protected ICurrencyListing Currencies;
 
-        public MoneyFactory(CurrencyListing currencyListing)
+        public MoneyFactory(ICurrencyListing currencyListing)
         {
             this.Currencies = currencyListing;
         }

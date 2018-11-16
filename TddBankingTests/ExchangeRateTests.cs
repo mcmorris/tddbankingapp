@@ -23,13 +23,15 @@
         [TestMethod]
         public void TestGetExchangeRate()
         {
-            IBank bank = new Bank(new MockUpCurrencyListing(), "USD");
-            bank.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
-            bank.AddExchangeRate(new ExchangeRate(DateTime.Now.AddMilliseconds(1d), "CHF", "USD", 2.1M));
-            var currentRate = bank.GetExchangeRate("CHF", "USD");
+            var stockExchange = new StockExchange();
+            stockExchange.AddExchangeRate(new ExchangeRate(DateTime.Now, "CHF", "USD", 2.0M));
+            stockExchange.AddExchangeRate(new ExchangeRate(DateTime.Now.AddMilliseconds(1d), "CHF", "USD", 2.1M));
+            var bank = new Bank(stockExchange, new MockUpCurrencyListing(), "USD");
+
+            var currentRate = stockExchange.GetExchangeRate("CHF", "USD");
             Assert.AreEqual(currentRate.ConversionRate, 2.1M);
             Assert.AreEqual(bank.GetInternalExchangeRate("CHF"), currentRate);
-            Assert.AreEqual(bank.GetExchangeRate("CHF", "CAD"), null);
+            Assert.AreEqual(stockExchange.GetExchangeRate("CHF", "CAD"), null);
         }
 
 
@@ -37,12 +39,12 @@
         public void TestGetExchangeRateOn()
         {
             var targetDate = new DateTime(2012, 10, 5, 8, 0, 0);
-            IBank bank = new Bank(new MockUpCurrencyListing(), "USD");
-            bank.AddExchangeRate(new ExchangeRate(targetDate.AddDays(-2), "CHF", "USD", 2.0M));
-            bank.AddExchangeRate(new ExchangeRate(new DateTime(2012, 12, 7, 7, 0, 0), "CHF", "USD", 2.1M));
-            bank.AddExchangeRate(new ExchangeRate(new DateTime(2013, 2, 8, 8, 0, 0), "CHF", "USD", 2.2M));
-            Assert.AreEqual(bank.GetExchangeRateOn("CHF", "USD", targetDate), new ExchangeRate(targetDate.AddDays(-2), "CHF", "USD", 2.0M));
-            Assert.AreEqual(bank.GetExchangeRateOn("CHF", "CAD", targetDate), null);
+            var stockExchange = new StockExchange();
+            stockExchange.AddExchangeRate(new ExchangeRate(targetDate.AddDays(-2), "CHF", "USD", 2.0M));
+            stockExchange.AddExchangeRate(new ExchangeRate(new DateTime(2012, 12, 7, 7, 0, 0), "CHF", "USD", 2.1M));
+            stockExchange.AddExchangeRate(new ExchangeRate(new DateTime(2013, 2, 8, 8, 0, 0), "CHF", "USD", 2.2M));
+            Assert.AreEqual(stockExchange.GetExchangeRateOn("CHF", "USD", targetDate), new ExchangeRate(targetDate.AddDays(-2), "CHF", "USD", 2.0M));
+            Assert.AreEqual(stockExchange.GetExchangeRateOn("CHF", "CAD", targetDate), null);
         }
 
         [TestMethod]
